@@ -1,0 +1,77 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define endl "\n"
+#define int long long
+int min(int a,int b)
+{
+	if(a<b)
+		return a;
+	return b;
+}
+
+signed main() {
+ ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ int t,y;
+ cin>>t;
+ while(t--)
+ {
+ 	int n,k,q;
+ 	cin>>n>>q;
+ 	vector<int> a(n+1),b(n+1);
+ 	for(int i=1;i<=n;i++)
+ 	{
+ 		cin>>a[i];
+ 	}
+ 	for(int i=1;i<=n;i++)
+ 	{
+ 		cin>>b[i];
+ 	}
+ 	sort(a.begin()+1,a.end());
+ 	sort(b.begin()+1,b.end());
+
+    int k2=min(20000,n*n);
+ 	int lw=a[1]+b[1];
+ 	int hg=a.back()+b.back(),ans=-1;
+ 	while(lw<=hg)
+ 	{
+ 		int mid=(lw+hg)/2;
+ 		int ct=0,pos=1;
+ 		for(int i=n;i>=1;i--)
+ 		{
+ 			while(pos<=n&&(b[pos]+a[i])<=mid)
+ 				pos++;
+ 			ct=ct+pos-1;
+ 		}
+ 		//cout<<mid<<" "<<ct<<endl;
+ 		if(ct>=k2)
+ 		{
+ 			//cout<<ct<<" "<<mid<<endl; 
+ 			ans=mid;
+ 			hg=mid-1;
+ 		}
+ 		else
+ 		{
+ 			lw=mid+1;
+ 		}
+ 	}
+ 	//cout<<ans<<endl;
+
+ 	int sq=sqrtl(n)+1;
+ 	vector<int> tmp;
+ 	for(int i=1;i<=n;i++)
+ 	{
+ 		for(int j=1;j<=n;j++){
+ 			if(a[i]+b[j]>ans)
+ 				break;
+ 			tmp.push_back(a[i]+b[j]);
+ 		}
+ 	}
+ 	sort(tmp.begin(),tmp.end());
+ 	while(q--){
+ 		cin>>k;
+ 		cout<<tmp[k-1]<<endl;
+ 	}
+ 	
+ }
+}
+
